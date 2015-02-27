@@ -923,6 +923,10 @@ def _run_command(command, shell=True, pty=True, combine_stderr=True,
             stderr=stderr, timeout=timeout)
 
         # Assemble output string
+        if env.get('stdout_processor'):
+            result_stdout = env.stdout_processor(result_stdout)
+        if env.get('stderr_processor'):
+            result_stderr = env.stderr_processor(result_stderr)
         out = _AttributeString(result_stdout)
         err = _AttributeString(result_stderr)
 
